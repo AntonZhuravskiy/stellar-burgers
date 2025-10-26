@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { MemoryRouter } from 'react-router-dom';
 
 import { AppHeaderUI } from '@ui';
 
@@ -10,7 +11,14 @@ const meta = {
   parameters: {
     // More on how to position stories at: https://storybook.js.org/docs/configure/story-layout
     layout: 'fullscreen'
-  }
+  },
+  decorators: [
+    (Story) => (
+      <MemoryRouter>
+        <Story />
+      </MemoryRouter>
+    )
+  ]
 } satisfies Meta<typeof AppHeaderUI>;
 
 export default meta;
@@ -18,16 +26,12 @@ type Story = StoryObj<typeof meta>;
 
 export const LoggedIn: Story = {
   args: {
-    userName: 'John Doe',
-    pathname: '/',
-    isAuthenticated: true
+    userName: 'John Doe'
   }
 };
 
 export const LoggedOut: Story = {
   args: {
-    userName: undefined,
-    pathname: '/',
-    isAuthenticated: false
+    userName: undefined
   }
 };

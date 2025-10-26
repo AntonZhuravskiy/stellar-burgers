@@ -6,13 +6,14 @@ import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
 import { FC, useEffect } from 'react';
-import { fetchIngredients } from '../../services/slices/ingredientsSlice';
+import {
+  fetchIngredients,
+  selectIngredientsLoading
+} from '../../services/slices/ingredientsSlice';
 
 export const ConstructorPage: FC = () => {
   const dispatch = useDispatch();
-  const isIngredientsLoading = useSelector(
-    (state) => state.ingredients.loading
-  );
+  const isIngredientsLoading = useSelector(selectIngredientsLoading);
 
   useEffect(() => {
     dispatch(fetchIngredients());

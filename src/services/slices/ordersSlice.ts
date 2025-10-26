@@ -132,3 +132,31 @@ const ordersSlice = createSlice({
 
 export const { clearOrderModalData, clearCurrentOrder } = ordersSlice.actions;
 export default ordersSlice.reducer;
+
+// Selectors
+export const selectFeeds = (state: { orders: OrdersState }) =>
+  state.orders.feeds;
+
+export const selectTotal = (state: { orders: OrdersState }) =>
+  state.orders.total;
+
+export const selectTotalToday = (state: { orders: OrdersState }) =>
+  state.orders.totalToday;
+
+export const selectUserOrders = (state: { orders: OrdersState }) =>
+  state.orders.userOrders;
+
+export const selectCurrentOrder = (state: { orders: OrdersState }) =>
+  state.orders.currentOrder;
+
+export const selectOrderRequest = (state: { orders: OrdersState }) =>
+  state.orders.orderRequest;
+
+export const selectOrderModalData = (state: { orders: OrdersState }) =>
+  state.orders.orderModalData;
+
+export const selectOrdersLoading = (state: { orders: OrdersState }) =>
+  state.orders.loading;
+
+export const selectOrdersError = (state: { orders: OrdersState }) =>
+  state.orders.error;

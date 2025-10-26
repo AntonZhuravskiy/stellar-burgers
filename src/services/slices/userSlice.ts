@@ -148,3 +148,14 @@ const userSlice = createSlice({
 
 export const { clearError } = userSlice.actions;
 export default userSlice.reducer;
+
+// Selectors
+export const selectUser = (state: { user: UserState }) => state.user.user;
+
+export const selectIsAuthenticated = (state: { user: UserState }) =>
+  state.user.isAuthenticated;
+
+export const selectUserLoading = (state: { user: UserState }) =>
+  state.user.loading;
+
+export const selectUserError = (state: { user: UserState }) => state.user.error;

@@ -2,15 +2,23 @@ import { Preloader } from '@ui';
 import { FeedUI } from '@ui-pages';
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
-import { fetchFeeds } from '../../services/slices/ordersSlice';
-import { fetchIngredients } from '../../services/slices/ingredientsSlice';
+import {
+  fetchFeeds,
+  selectFeeds,
+  selectOrdersLoading
+} from '../../services/slices/ordersSlice';
+import {
+  fetchIngredients,
+  selectIngredients,
+  selectIngredientsLoading
+} from '../../services/slices/ingredientsSlice';
 
 export const Feed: FC = () => {
   const dispatch = useDispatch();
-  const orders = useSelector((state) => state.orders.feeds);
-  const loading = useSelector((state) => state.orders.loading);
-  const ingredients = useSelector((state) => state.ingredients.ingredients);
-  const ingredientsLoading = useSelector((state) => state.ingredients.loading);
+  const orders = useSelector(selectFeeds);
+  const loading = useSelector(selectOrdersLoading);
+  const ingredients = useSelector(selectIngredients);
+  const ingredientsLoading = useSelector(selectIngredientsLoading);
 
   useEffect(() => {
     dispatch(fetchFeeds());

@@ -4,16 +4,22 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useSelector, useDispatch } from '../../services/store';
 import { useParams } from 'react-router-dom';
-import { fetchOrderByNumber } from '../../services/slices/ordersSlice';
+import {
+  fetchOrderByNumber,
+  selectFeeds,
+  selectUserOrders,
+  selectCurrentOrder
+} from '../../services/slices/ordersSlice';
+import { selectIngredients } from '../../services/slices/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
   const { number } = useParams<{ number: string }>();
   const dispatch = useDispatch();
 
-  const ingredients = useSelector((state) => state.ingredients.ingredients);
-  const feeds = useSelector((state) => state.orders.feeds);
-  const userOrders = useSelector((state) => state.orders.userOrders);
-  const currentOrder = useSelector((state) => state.orders.currentOrder);
+  const ingredients = useSelector(selectIngredients);
+  const feeds = useSelector(selectFeeds);
+  const userOrders = useSelector(selectUserOrders);
+  const currentOrder = useSelector(selectCurrentOrder);
 
   useEffect(() => {
     if (number) {

@@ -1,5 +1,9 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from '../../services/store';
+import {
+  selectIsAuthenticated,
+  selectUserLoading
+} from '../../services/slices/userSlice';
 import { Preloader } from '../ui/preloader';
 
 type ProtectedRouteProps = {
@@ -12,8 +16,8 @@ export const ProtectedRoute = ({
   onlyUnAuth = false
 }: ProtectedRouteProps) => {
   const location = useLocation();
-  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-  const loading = useSelector((state) => state.user.loading);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const loading = useSelector(selectUserLoading);
 
   // Показываем лоадер во время проверки авторизации
   if (loading) {

@@ -4,19 +4,28 @@ import { BurgerConstructorUI } from '@ui';
 import { useDispatch, useSelector } from '../../services/store';
 import {
   createOrder,
-  clearOrderModalData
+  clearOrderModalData,
+  selectOrderRequest,
+  selectOrderModalData
 } from '../../services/slices/ordersSlice';
-import { clearConstructor } from '../../services/slices/constructorSlice';
+import {
+  clearConstructor,
+  selectConstructorBun,
+  selectConstructorIngredients
+} from '../../services/slices/constructorSlice';
+import { selectIsAuthenticated } from '../../services/slices/userSlice';
 import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const constructorItems = useSelector((state) => state.burgerConstructor);
-  const orderRequest = useSelector((state) => state.orders.orderRequest);
-  const orderModalData = useSelector((state) => state.orders.orderModalData);
-  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+  const bun = useSelector(selectConstructorBun);
+  const ingredients = useSelector(selectConstructorIngredients);
+  const constructorItems = { bun, ingredients };
+  const orderRequest = useSelector(selectOrderRequest);
+  const orderModalData = useSelector(selectOrderModalData);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   // Очищаем конструктор после успешного создания заказа
   useEffect(() => {
