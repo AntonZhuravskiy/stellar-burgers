@@ -22,6 +22,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
     <form
       className={`mt-30 ${styles.form} ${commonStyles.form}`}
       onSubmit={handleSubmit}
+      autoComplete='off'
     >
       <>
         <div className='pb-6'>
@@ -35,6 +36,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
+            autoComplete='off'
           />
         </div>
         <div className='pb-6'>
@@ -48,6 +50,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
+            autoComplete='off'
           />
         </div>
         <div className='pb-6'>
@@ -61,6 +64,7 @@ export const ProfileUI: FC<ProfileUIProps> = ({
             errorText={''}
             size={'default'}
             icon={'EditIcon'}
+            autoComplete='new-password'
           />
         </div>
         {isFormChanged && (
