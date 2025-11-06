@@ -1,25 +1,43 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useEffect } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
+import { useSelector, useDispatch } from '../../services/store';
+import { useParams } from 'react-router-dom';
+import {
+  fetchOrderByNumber,
+  selectFeeds,
+  selectUserOrders,
+  selectCurrentOrder
+} from '../../services/slices/ordersSlice';
+import { selectIngredients } from '../../services/slices/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  const { number } = useParams<{ number: string }>();
+  const dispatch = useDispatch();
 
-  const ingredients: TIngredient[] = [];
+  const ingredients = useSelector(selectIngredients);
+  const feeds = useSelector(selectFeeds);
+  const userOrders = useSelector(selectUserOrders);
+  const currentOrder = useSelector(selectCurrentOrder);
+
+  useEffect(() => {
+    if (number) {
+      dispatch(fetchOrderByNumber(Number(number)));
+    }
+  }, [dispatch, number]);
+
+  // Ищем заказ в feeds, userOrders или используем currentOrder
+  const orderData =
+    feeds.find((order) => order.number === Number(number)) ||
+    userOrders.find((order) => order.number === Number(number)) ||
+    currentOrder;
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
-    if (!orderData || !ingredients.length) return null;
+    if (!orderData || !ingredients.length) {
+      return null;
+    }
 
     const date = new Date(orderData.createdAt);
 
@@ -51,12 +69,14 @@ export const OrderInfo: FC = () => {
       0
     );
 
-    return {
+    const result = {
       ...orderData,
       ingredientsInfo,
       date,
       total
     };
+
+    return result;
   }, [orderData, ingredients]);
 
   if (!orderInfo) {

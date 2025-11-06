@@ -1,18 +1,37 @@
-import { FC, SyntheticEvent, useState } from 'react';
+import { FC, SyntheticEvent, useState, useEffect } from 'react';
 import { RegisterUI } from '@ui-pages';
+import { useDispatch, useSelector } from '../../services/store';
+import {
+  registerUser,
+  selectUserError,
+  selectIsAuthenticated
+} from '../../services/slices/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 export const Register: FC = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const error = useSelector(selectUserError);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      // После успешной регистрации перенаправляем на главную страницу
+      navigate('/', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+    dispatch(registerUser({ name: userName, email, password }));
   };
 
   return (
     <RegisterUI
-      errorText=''
+      errorText={error || ''}
       email={email}
       userName={userName}
       password={password}
